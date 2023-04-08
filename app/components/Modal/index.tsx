@@ -103,6 +103,7 @@ const Modal: React.FC<ModelProps> = ({
                     label={actionLabel}
                   />
                 </div>
+                {footer}
               </div>
             </div>
           </div>
