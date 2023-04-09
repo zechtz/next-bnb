@@ -46,13 +46,13 @@ export const authOptions: AuthOptions = {
           },
         });
 
-        if (!user || !user?.hashed_password) {
+        if (!user || !user?.hashedPassword) {
           throw new Error("Invalid credentials");
         }
 
         const isCorrectPassword = await bcrypt.compare(
           password,
-          user.hashed_password,
+          user.hashedPassword,
         );
 
         if (!isCorrectPassword) {
@@ -65,7 +65,6 @@ export const authOptions: AuthOptions = {
   ],
   pages: {
     signIn: "/",
-    error: "/",
   },
   debug: process.env.NODE_ENV === "development",
   session: {
