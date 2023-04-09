@@ -6,6 +6,8 @@ import ToasterProvider from "@/app/providers/ToasterProvider";
 
 import RegisterModal from "@/app/components/Modal/RegisterModal";
 import LoginModal from "@/app/components/Modal/LoginModal";
+import RentModal from "@/app/components/Modal/RentModal";
+
 import { getCurrentUser } from "@/app/actions/getCurrentUser";
 
 export const metadata = {
@@ -26,6 +28,7 @@ const RootLayout = async ({ children }: { children: React.ReactNode }) => {
           <ToasterProvider />
           <RegisterModal />
           <LoginModal />
+          <RentModal />
           <Navbar currentUser={currentUser} />
         </ClientOnly>
         {children}
