@@ -11,73 +11,84 @@ datasource db {
 }
 
 model User {
-  id              Int           @id @default(autoincrement())
-  name            String?
-  email           String?       @unique
-  email_verified  DateTime?
-  image           String?
-  hashed_password String?
-  created_at      DateTime      @default(now())
-  updated_at      DateTime      @updatedAt
-  favorite_ids    Int[]         @db.Integer
-  accounts        Account[]
-  listings        Listing[]
-  reservations    Revervation[]
+  id             Int           @id @default(autoincrement())
+  name           String?       @db.VarChar(255)
+  email          String?       @unique
+  image          String?       @db.VarChar(255)
+  hashedPassword String?       @map("hashed_password") @db.VarChar(255)
+  emailVerified  DateTime?     @map("email_verified")
+  createdAt      DateTime      @default(now()) @map("created_at")
+  updatedAt      DateTime      @updatedAt @map("updated_at")
+  favoriteIds    Int[]         @map("favorite_ids") @db.Integer
+  accounts       Account[]
+  listings       Listing[]
+  reservations   Revervation[]
+  sessions       Session[]
 
   @@map("users")
 }
 
 model Account {
-  id                  Int     @id @default(autoincrement())
-  type                String
-  provider            String
-  provider_account_id String
-  refresh_token       String?
-  access_token        String?
-  expires_at          Int?
-  token_type          String?
-  scope               String?
-  id_token            String
-  session_state       String?
-  User                User?   @relation(fields: [user_id], references: [id], onDelete: Cascade)
-  user_id             Int?
+  id                Int     @id @default(autoincrement())
+  type              String  @db.VarChar(255)
+  provider          String  @db.VarChar(255)
+  providerAccountId String  @map("provider_account_id") @db.VarChar(255)
+  user              User?   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId            Int?    @map("user_id")
+  refresh_token     String? @db.Text
+  access_token      String? @db.Text
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String? @db.Text
+  session_state     String?
 
-  @@unique([provider, provider_account_id])
+  @@unique([provider, providerAccountId], map: "provider_provider_account_id_unique")
   @@map("accounts")
 }
 
+model Session {
+  id           Int      @id @default(autoincrement())
+  sessionToken String   @unique @map("session_token")
+  expires      DateTime
+  user         User?    @relation(fields: [userId], references: [id])
+  userId       Int?     @map("user_id")
+
+  @@map("sessions")
+}
+
 model Listing {
-  id             Int           @id @default(autoincrement())
-  title          String
-  description    String
-  category       String
-  image_src      String
-  room_count     Int
-  bathroom_count Int
-  guest_count    Int
-  location_value String
-  price          Int
-  created_at     DateTime      @default(now())
-  updated_at     DateTime      @updatedAt
-  User           User?         @relation(fields: [user_id], references: [id], onDelete: Cascade)
-  user_id        Int?
-  reservations   Revervation[]
+  id            Int           @id @default(autoincrement())
+  title         String        @db.VarChar(255)
+  description   String        @db.VarChar(255)
+  category      String        @db.VarChar(255)
+  imageSrc      String        @map("image_src") @db.VarChar(255)
+  roomCount     Int           @map("room_count")
+  bathroomCount Int           @map("bathroom_count")
+  guestCount    Int           @map("guest_count")
+  locationValue String        @map("location_value") @db.VarChar(255)
+  price         Int
+  createdAt     DateTime      @default(now()) @map("created_at")
+  updatedAt     DateTime      @updatedAt @map("updated_at")
+  user          User?         @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId        Int?          @map("user_id")
+  reservations  Revervation[]
 
   @@map("listings")
 }
 
 model Revervation {
   id          Int      @id @default(autoincrement())
-  description String
-  total_price Int
-  start_date  DateTime
-  end_date    DateTime
-  created_at  DateTime @default(now())
-  updated_at  DateTime @updatedAt
-  User        User?    @relation(fields: [user_id], references: [id], onDelete: Cascade)
-  user_id     Int?
-  Listing     Listing? @relation(fields: [listing_id], references: [id], onDelete: Cascade)
-  listing_id  Int?
+  description String   @db.VarChar(255)
+  totalPrice  Int      @map("total_price")
+  startDate   DateTime @map("start_date")
+  endDate     DateTime @map("end_date")
+  createdAt   DateTime @default(now()) @map("created_at")
+  updatedAt   DateTime @updatedAt @map("updated_at")
+  user        User?    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId      Int?     @map("user_id")
+  Listing     Listing? @relation(fields: [listingId], references: [id], onDelete: Cascade)
+  listingId   Int?     @map("listing_id")
 
   @@map("reservations")
 }
