@@ -1,5 +1,5 @@
 import { SafeUser } from "@/app/types";
 
 export default interface CurrentUser {
-  currentUser?: SafeUser | null;
+  currentUser?: SafeUser | null | undefined;
 }
