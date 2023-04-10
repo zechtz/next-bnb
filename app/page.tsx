@@ -4,7 +4,6 @@ import EmptyState from "@/app/components/EmptyState";
 import getListings from "@/app/actions/getListings";
 import ListingCard from "@/app/components/Listing/Card";
 import getCurrentUser from "@/app/actions/getCurrentUser";
-import CurrentUser from "@/app/types/current-user";
 import { SafeListing } from "@/app/types";
 
 const Home = async () => {
