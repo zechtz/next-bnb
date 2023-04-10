@@ -1,12 +1,13 @@
 import { Nunito } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/app/components/Navbar";
-import ClientOnly from "@/app/components/ClientOnly";
 import ToasterProvider from "@/app/providers/ToasterProvider";
 
 import RegisterModal from "@/app/components/Modal/RegisterModal";
 import LoginModal from "@/app/components/Modal/LoginModal";
 import RentModal from "@/app/components/Modal/RentModal";
+
+import ClientOnly from "@/app/components/ClientOnly";
 
 import { getCurrentUser } from "@/app/actions/getCurrentUser";
 
@@ -31,7 +32,7 @@ const RootLayout = async ({ children }: { children: React.ReactNode }) => {
           <RentModal />
           <Navbar currentUser={currentUser} />
         </ClientOnly>
-        {children}
+        <div className="pb-20 pt-28">{children}</div>
       </body>
     </html>
   );
