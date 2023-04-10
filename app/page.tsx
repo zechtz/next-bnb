@@ -3,9 +3,9 @@ import ClientOnly from "@/app/components/ClientOnly";
 import EmptyState from "@/app/components/EmptyState";
 import getListings from "@/app/actions/getListings";
 import ListingCard from "@/app/components/Listing/Card";
-import { Listing } from "@prisma/client";
 import getCurrentUser from "@/app/actions/getCurrentUser";
 import CurrentUser from "@/app/types/current-user";
+import { SafeListing } from "@/app/types";
 
 const Home = async () => {
   const listings = await getListings();
@@ -35,8 +35,8 @@ const Home = async () => {
             gap-8
             "
         >
-          {listings.map((listing: Listing, index: number) => (
-            <ListingCard key={index} data={listing} currentUser={currentUser as CurrentUser} />
+          {listings.map((listing: SafeListing, index: number) => (
+            <ListingCard key={index} data={listing} currentUser={currentUser} />
           ))}
         </div>
       </Container>
