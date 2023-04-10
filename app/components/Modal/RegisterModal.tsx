@@ -4,16 +4,18 @@ import axios from "axios";
 import { AiFillGithub } from "react-icons/ai";
 import { FcGoogle } from "react-icons/fc";
 import Modal from "@/app/components/Modal";
-import useRegisterModal from "@/app/hooks/useRegisterModal";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import Heading from "@/app/components/Heading";
 import Input from "@/app/components/forms/Input";
 import { toast } from "react-hot-toast";
 import Button from "@/app/components/Button";
 import { signIn } from "next-auth/react";
+import useRegisterModal from "@/app/hooks/useRegisterModal";
+import useLoginModal from "@/app/hooks/useLoginModal";
 
 export const RegisterModal = (props: {}) => {
   const registerModal = useRegisterModal();
+  const loginModal = useLoginModal();
   const [isLoading, setIsLoading] = React.useState(false);
 
   const {
@@ -42,6 +44,11 @@ export const RegisterModal = (props: {}) => {
         setIsLoading(false);
       });
   };
+
+  const toggle = React.useCallback(() => {
+    registerModal.onClose();
+    loginModal.onOpen();
+  }, [loginModal, registerModal]);
 
   const bodyContent = (
     <div className="flex flex-col gap-4">
@@ -82,19 +89,19 @@ export const RegisterModal = (props: {}) => {
         outline
         label="Continue with Google"
         icon={FcGoogle}
-        onClick={() => signIn('google')}
+        onClick={() => signIn("google")}
       />
       <Button
         outline
         label="Continue with Github"
         icon={AiFillGithub}
-        onClick={() => signIn('github')}
+        onClick={() => signIn("github")}
       />
       <div className="text-neutral-500 text-center mt-4 font-light">
         <div className="justify-center flex flex-row items-center gap-2">
           <div>Already have an account?</div>
           <div
-            onClick={registerModal.onClose}
+            onClick={toggle}
             className="
             text-neutral-800
             cursor-pointer
