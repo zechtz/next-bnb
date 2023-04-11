@@ -1,7 +1,7 @@
-# Airbnb close 
+# Airbnb clone 
 
-## Stack
- NextJs 13 + TailwindCSS + Typescript
+## Tech Stack
+ NextJs 13 + TailwindCSS + Typescript + prisma
 
 ## Getting Started
 
