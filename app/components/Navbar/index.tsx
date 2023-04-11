@@ -1,14 +1,16 @@
-"use client";
+import { SafeUser } from "@/app/types";
 
-import React from "react";
+import Category from "@/app/components/Navbar/Category";
 import Container from "@/app/components/Container";
 import Logo from "@/app/components/Navbar/Logo";
-import Search from "@/app/components/Navbar/Search";
 import UserMenu from "@/app/components/Navbar/UserMenu";
-import CurrentUser from "@/app/types/current-user";
-import Category from "@/app/components/Navbar/Category";
+import Search from "@/app/components/Navbar/Search";
 
-const Navbar: React.FC<CurrentUser> = ({ currentUser }) => {
+interface NavbarProps {
+  currentUser?: SafeUser | null;
+}
+
+const Navbar: React.FC<NavbarProps> = ({ currentUser }) => {
   return (
     <div className="fixed w-full bg-white z-10 shadow-sm">
       <div
