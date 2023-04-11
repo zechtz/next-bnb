@@ -114,6 +114,10 @@ export const Category = (props: {}) => {
 
   const isMainPage = pathname === "/"
 
+  if (!isMainPage) {
+    return null;
+  }
+
   return (
     <Container>
       <div className="
