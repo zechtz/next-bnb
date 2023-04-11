@@ -7,7 +7,7 @@ import { format } from "date-fns";
 import Image from "next/image";
 import HeartButton from "@/app/components/HeartButton";
 import Button from "../Button";
-import { SafeListing, SafeUser } from "@/app/types";
+import { SafeListing, SafeReservation, SafeUser } from "@/app/types";
 
 interface ListingCardProps {
   data: SafeListing;
