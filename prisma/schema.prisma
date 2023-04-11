@@ -22,7 +22,7 @@ model User {
   favoriteIds    Int[]         @map("favorite_ids") @db.Integer
   accounts       Account[]
   listings       Listing[]
-  reservations   Revervation[]
+  reservations   Reservation[]
   sessions       Session[]
 
   @@map("users")
@@ -60,7 +60,7 @@ model Session {
 model Listing {
   id            Int           @id @default(autoincrement())
   title         String        @db.VarChar(255)
-  description   String        @db.VarChar(255)
+  description   String        @db.Text
   category      String        @db.VarChar(255)
   imageSrc      String        @map("image_src") @db.VarChar(255)
   roomCount     Int           @map("room_count")
@@ -72,23 +72,22 @@ model Listing {
   updatedAt     DateTime      @updatedAt @map("updated_at")
   user          User?         @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId        Int?          @map("user_id")
-  reservations  Revervation[]
+  reservations  Reservation[]
 
   @@map("listings")
 }
 
-model Revervation {
-  id          Int      @id @default(autoincrement())
-  description String   @db.VarChar(255)
-  totalPrice  Int      @map("total_price")
-  startDate   DateTime @map("start_date")
-  endDate     DateTime @map("end_date")
-  createdAt   DateTime @default(now()) @map("created_at")
-  updatedAt   DateTime @updatedAt @map("updated_at")
-  user        User?    @relation(fields: [userId], references: [id], onDelete: Cascade)
-  userId      Int?     @map("user_id")
-  Listing     Listing? @relation(fields: [listingId], references: [id], onDelete: Cascade)
-  listingId   Int?     @map("listing_id")
+model Reservation {
+  id         Int      @id @default(autoincrement())
+  totalPrice Int      @map("total_price")
+  startDate  DateTime @map("start_date")
+  endDate    DateTime @map("end_date")
+  createdAt  DateTime @default(now()) @map("created_at")
+  updatedAt  DateTime @updatedAt @map("updated_at")
+  user       User?    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId     Int?     @map("user_id")
+  listing    Listing? @relation(fields: [listingId], references: [id], onDelete: Cascade)
+  listingId  Int?     @map("listing_id")
 
   @@map("reservations")
 }
